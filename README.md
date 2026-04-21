@@ -15,3 +15,27 @@ Pada Milestone 1, saya menerapkan server web single-threaded dasar yang dapat me
 ### Hasil Pembelajaran
 
 Mengumpulkan baris-baris ini ke dalam `Vec` dan mencetaknya membantu saya memvisualisasikan semua metadata yang dikirim browser saya ke server selama permintaan.
+
+# Catatan Refleksi Commit 2
+
+## Milestone 2: Mengirim File HTML sebagai Respons HTTP
+
+Pada Milestone 2, saya mempelajari cara mengirimkan konten file HTML sebagai respons dari server web ke browser.
+
+### Komponen Utama
+
+- **Membaca File HTML**: Saya menggunakan fungsi `fs::read_to_string` untuk membaca isi file `hello.html` menjadi string yang kemudian dikirimkan ke klien.
+
+- **Menyusun Respons HTTP**: Struktur respons HTTP harus mengikuti format yang tepat, yaitu _status line_ (`HTTP/1.1 200 OK`), header, dan body.
+
+- **Header `Content-Length`**: Header ini penting untuk memberi tahu browser ukuran data (dalam byte) yang akan diterima. Jika nilainya tidak sesuai ukuran konten sebenarnya, browser bisa gagal menampilkan halaman dengan benar atau terus menunggu data tambahan.
+
+- **Menggabungkan Respons dengan `format!`**: Dengan makro `format!`, saya menyatukan _status line_, header, dan isi file HTML menjadi satu string respons utuh sebelum dikirim melalui `stream.write_all`.
+
+### Hasil Pembelajaran
+
+Saya memahami bahwa ketepatan format respons HTTP sangat berpengaruh pada keberhasilan browser dalam merender halaman yang dikirim server.
+
+### Dokumentasi Commit 2
+
+![Dokumentasi Commit 2](commit2.png)
