@@ -99,3 +99,23 @@ Pada Milestone 5, saya berhasil meningkatkan performa server dengan mengimplemen
 ### Hasil Pembelajaran
 
 Melalui proses ini, saya semakin memahami filosofi Rust dalam menangani konkurensi yang aman melalui sistem ownership dan type system yang mendeteksi potensi kesalahan sejak masa kompilasi.
+
+# Catatan Refleksi Commit Bonus
+
+## Bonus: `ThreadPool::build` sebagai Pengganti `new`
+
+Implementasi fungsi `build` sebagai pengganti `new` pada `ThreadPool` sangat valid karena mengikuti idiom penanganan error di Rust yang membedakan antara kesalahan yang dapat dipulihkan dan yang tidak dapat dipulihkan.
+
+### Komponen Utama
+
+- **`ThreadPool::new`**: Biasanya menggunakan `assert!` yang akan memicu `panic!` jika input tidak valid. Hal ini cocok untuk kesalahan logika pemrogram yang tidak seharusnya terjadi dalam keadaan normal.
+
+- **`ThreadPool::build`**: Mengembalikan tipe `Result`, sehingga kegagalan pembuatan pool menjadi dapat dipulihkan dan memberi kendali penuh kepada pemanggil untuk menentukan langkah mitigasi selanjutnya.
+
+- **Sumber Input Eksternal**: Pendekatan `build` sangat berguna jika ukuran pool ditentukan dari argumen CLI atau file konfigurasi, karena kesalahan input dari pengguna bisa saja terjadi saat runtime.
+
+- **Perilaku Aplikasi**: Dengan menggunakan `build`, aplikasi server tidak langsung crash secara tiba-tiba, melainkan dapat memberikan pesan kesalahan yang informatif sebelum berhenti secara aman.
+
+### Hasil Pembelajaran
+
+Latihan ini memperdalam pemahaman saya tentang kapan harus menggunakan `Result` untuk menangani kegagalan runtime yang masih bisa dipulihkan, dibandingkan menggunakan `panic!` untuk kegagalan kontrak kode yang bersifat fatal.
