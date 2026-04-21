@@ -39,3 +39,25 @@ Saya memahami bahwa ketepatan format respons HTTP sangat berpengaruh pada keberh
 ### Dokumentasi Commit 2
 
 ![Dokumentasi Commit 2](commit2.png)
+
+# Catatan Refleksi Commit 3
+
+## Milestone 3: Validasi Rute dan Penanganan 404
+
+Pada Milestone 3, saya mengimplementasikan logika untuk memvalidasi permintaan HTTP masuk agar server dapat memberikan respons berbeda berdasarkan rute yang diminta.
+
+### Komponen Utama
+
+- **Validasi Request Line**: Saya membaca baris pertama permintaan (_request line_) dan memeriksa apakah rute valid, misalnya `GET / HTTP/1.1`, atau termasuk rute yang tidak terdaftar.
+
+- **Respons untuk Rute Tidak Valid**: Jika rute tidak valid (misalnya `/bad`), server mengembalikan status `404 NOT FOUND` beserta konten dari file `404.html` yang menampilkan pesan kesalahan.
+
+- **Refactoring Logika Respons**: Saya mengelompokkan penentuan `status line` dan nama file dalam satu blok logika (seperti `if/else` atau `match`), sehingga pembacaan file dan pengiriman respons cukup ditulis sekali di akhir fungsi.
+
+### Hasil Pembelajaran
+
+Refactoring pada tahap ini sangat penting agar kode tidak repetitif saat rute baru ditambahkan. Pendekatan ini membuat kode lebih bersih sesuai prinsip DRY (_Don't Repeat Yourself_) dan mempermudah pemeliharaan karena logika pemilihan rute dipisahkan dari logika penanganan file.
+
+### Dokumentasi Commit 3
+
+![Dokumentasi Commit 3](commit3.png)
