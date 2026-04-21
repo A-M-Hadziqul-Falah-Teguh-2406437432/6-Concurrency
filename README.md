@@ -61,3 +61,21 @@ Refactoring pada tahap ini sangat penting agar kode tidak repetitif saat rute ba
 ### Dokumentasi Commit 3
 
 ![Dokumentasi Commit 3](commit3.png)
+
+# Catatan Refleksi Commit 4
+
+## Milestone 4: Simulasi Respons Lambat
+
+Pada Milestone 4, saya mensimulasikan respons lambat pada server dengan menambahkan rute `/sleep` yang memanggil fungsi `thread::sleep` selama 10 detik.
+
+### Komponen Utama
+
+- **Rute `/sleep`**: Rute ini digunakan untuk mensimulasikan permintaan yang membutuhkan waktu proses lebih lama dari biasanya.
+
+- **Dampak pada Server Single-Threaded**: Saat saya membuka dua jendela browser dan mengakses rute `/sleep` terlebih dahulu, lalu segera mengakses rute utama `/`, saya mengamati bahwa halaman utama tertahan sampai `/sleep` selesai diproses.
+
+- **Penyebab Perilaku**: Hal ini terjadi karena server masih bersifat single-threaded, sehingga hanya dapat memproses satu permintaan dalam satu waktu secara sekuensial. Thread utama server sepenuhnya terpakai untuk menangani permintaan tidur tersebut, sehingga permintaan baru harus menunggu di antrean.
+
+### Hasil Pembelajaran
+
+Simulasi ini menunjukkan kelemahan besar server single-threaded dalam menangani trafik dunia nyata. Satu permintaan yang lambat dapat menyebabkan pengalaman buruk bagi pengguna lain, sehingga saya mendapat motivasi kuat untuk mengimplementasikan multithreading pada milestone berikutnya agar server dapat memproses banyak permintaan secara bersamaan tanpa saling memblokir.
