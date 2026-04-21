@@ -79,3 +79,23 @@ Pada Milestone 4, saya mensimulasikan respons lambat pada server dengan menambah
 ### Hasil Pembelajaran
 
 Simulasi ini menunjukkan kelemahan besar server single-threaded dalam menangani trafik dunia nyata. Satu permintaan yang lambat dapat menyebabkan pengalaman buruk bagi pengguna lain, sehingga saya mendapat motivasi kuat untuk mengimplementasikan multithreading pada milestone berikutnya agar server dapat memproses banyak permintaan secara bersamaan tanpa saling memblokir.
+
+# Catatan Refleksi Commit 5
+
+## Milestone 5: Thread Pool dan Konkurensi
+
+Pada Milestone 5, saya berhasil meningkatkan performa server dengan mengimplementasikan `ThreadPool` yang memungkinkan penanganan banyak permintaan secara konkuren.
+
+### Komponen Utama
+
+- **`mpsc` Channel**: Saya mempelajari bahwa penggunaan `mpsc` channel sangat penting untuk mengirimkan tugas (`Job`) dari thread utama ke sekumpulan worker thread yang siap mengeksekusinya.
+
+- **Berbagi Receiver Secara Aman**: Untuk membagikan receiver channel di antara banyak worker secara aman, saya menggunakan kombinasi `Arc` untuk berbagi kepemilikan dan `Mutex` untuk memastikan hanya satu worker yang dapat mengambil tugas pada satu waktu.
+
+- **Mengatasi Pemblokiran**: Implementasi ini menyelesaikan masalah pemblokiran pada Milestone 4. Rute lambat seperti `/sleep` tidak lagi menghalangi rute lainnya karena tugas tersebut dijalankan di thread yang berbeda.
+
+- **Batas Jumlah Thread**: Penggunaan pool dengan jumlah thread terbatas, dalam hal ini 4, membantu mencegah serangan DoS yang dapat menghabiskan sumber daya sistem jika setiap koneksi dibiarkan membuat thread baru tanpa batas.
+
+### Hasil Pembelajaran
+
+Melalui proses ini, saya semakin memahami filosofi Rust dalam menangani konkurensi yang aman melalui sistem ownership dan type system yang mendeteksi potensi kesalahan sejak masa kompilasi.
